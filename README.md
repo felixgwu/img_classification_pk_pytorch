@@ -6,13 +6,49 @@ it provides fast experiment setup and attempts to maximize the number of project
 Please feel free to summit issues or pull requests if you want to contribute.
 
 ## Usage
-Use `python3 main.py -h` to show all arguments
+Use `python3 main.py -h` to show all arguments.
 
-## Example
+### Training
+Train a ResNet-56 on CIFAR-10 with data augmentation:
 ```sh
-python3 main.py --data cifar10 --arch resnet --depth 56 --save save/resnet-56 --epochs 164
+python3 main.py --data cifar10+ --arch resnet --depth 56 --save save/resnet-56 --epochs 164
 ```
-See *scripts/cifar.sh* for more examples.
+See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
+### Evaluation
+```sh
+python3 main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
+```
+
+## Features
+
+### Experiment
+- [ ] Preventing overwriting previous experiments
+- [ ] Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
+- [ ] Automatically copying all source code to saving directory to prevent
+- [ ] TensorBoard support using tensorboard_logger
+- [ ] One script to show all experiment results
+
+### Models
+- [ ] AlexNet
+- [ ] VGGNet
+- [ ] SqueezeNet
+- [x] ResNet
+- [ ] ResNet with stochastic depth
+- [ ] Pre-ResNet
+- [ ] Wide ResNet
+- [ ] ResNext
+- [ ] DenseNet
+- [ ] MSDNet
+- [ ] Steerable CNN
+
+### Datasets
+- [x] CIFAR-10
+- [x] CIFAR-10+ (Horizontal flip and random cropping with padding 4)
+- [x] CIFAR-100
+- [x] CIFAR-100+ (Horizontal flip and random cropping with padding 4)
+- [ ] SVHN-small (without extra training data)
+- [ ] SVHN
+- [ ] ImageNet
 
 ## Progress
 - [x] CIFAR 10 & 100
@@ -47,7 +83,6 @@ See *scripts/cifar.sh* for more examples.
 - [ ] ResNext
 - [ ] ResNet with stochastic depth
 - [ ] MSDNet 
-- [ ] Steerable CNN
 - [ ] Checking the checkboxes
 - [ ] CPU support
 
