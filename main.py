@@ -36,7 +36,7 @@ model_names = ['resnet']
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument(
     '--save',
-    default='save/debug',
+    default='save/default-{}'.format(time.time()),
     type=str,
     metavar='SAVE',
     help='path to the experiment logging directory (default: save/debug)')
@@ -47,12 +47,6 @@ parser.add_argument('--data', metavar='D', default='cifar10',
                     ' (default: cifar10)')
 parser.add_argument('--data_root', metavar='DIR', default='data',
                     help='path to dataset (default: data)')
-parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet', type=str,
-                    help='model architecture: ' +
-                    ' | '.join(model_names) +
-                    ' (default: resnet)')
-parser.add_argument('-d', '--depth', default=56, type=int, metavar='D',
-                    help='depth (default=56)')
 parser.add_argument(
     '-j',
     '--workers',
@@ -63,20 +57,27 @@ parser.add_argument(
     help='number of data loading workers (default: 4)')
 
 # experiment setting related
-parser.add_argument('--print-freq', '-p', default=10, type=int,
-                    metavar='N', help='print frequency (default: 10)')
+parser.add_argument('--print-freq', '-p', default=100, type=int,
+                    metavar='N', help='print frequency (default: 100)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
-parser.add_argument('--evaluate', dest='evaluate', default='none',
-                    choices=['none', 'val', 'test'],
-                    help='evaluate model on validation set (default: none)')
+parser.add_argument('--evaluate', dest='evaluate', default='',
+                    choices=['', 'val', 'test'],
+                    help='eval mode: evaluate model on val/test set (default: training mode)')
 parser.add_argument('--pretrained', dest='pretrained', action='store_true',
                     help='use pre-trained model')
-parser.add_argument('--no_aug', dest='aug', action='store_false',
-                    help='do not use data_augmentation')
+parser.add_argument('-f', '--force', dest='force', action='store_true',
+                    help='force to overwrite existing save path')
+
+# model arch related
+parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet', type=str,
+                    help='model architecture: ' +
+                    ' | '.join(model_names) +
+                    ' (default: resnet)')
+parser.add_argument('-d', '--depth', default=56, type=int, metavar='D',
+                    help='depth (default=56)')
 parser.add_argument('--drop-rate', default=0.0, type=float,
                     metavar='LR', help='dropout rate (default: 0.2)')
-
 
 # training related
 parser.add_argument('--epochs', default=164, type=int, metavar='N',
@@ -132,7 +133,8 @@ def main():
     # parse arg and start experiment
     global args, best_err1, best_epoch
     args = parser.parse_args()
-    args.num_classes = config.datasets[args.data]
+    args.config_of_data = config.datasets[args.data]
+    args.num_classes = config.datasets[args.data]['num_classes']
     if configure is None:
         args.tensorboard = False
 
@@ -185,21 +187,23 @@ def main():
         return
     else:
         train_loader, val_loader, test_loader = getDataloaders(
-            args.data, splits=('train', 'val'))
+            splits=('train', 'val'), **vars(args))
 
     # define optimizer
     optimizer = get_optimizer(model, args)
 
-    # don't overwrite old experiments
-    if not os.path.exists(args.save):
-        os.makedirs(args.save)
-        print('create folder: ' + Fore.GREEN + args.save + Fore.RESET)
-    elif args.save.find('debug') < 0:
-        print('Error:' + Fore.RED + args.save + Fore.RESET
+    # check if the folder exists
+    if os.path.exists(args.save):
+        print(Fore.RED + args.save + Fore.RESET
               + ' already exists!', file=sys.stderr)
-        ans = input('Do you want to overwrite it? [y/N]:')
-        if ans not in ('y', 'Y', 'yes', 'Yes'):
-            os.exit(1)
+        if not args.force:
+            ans = input('Do you want to overwrite it? [y/N]:')
+            if ans not in ('y', 'Y', 'yes', 'Yes'):
+                os.exit(1)
+        print('remove existing ' + args.save)
+        shutil.rmtree(args.save)
+    os.makedirs(args.save)
+    print('create folder: ' + Fore.GREEN + args.save + Fore.RESET)
 
     # copy code to save folder
     if args.save.find('debug') < 0:
@@ -235,7 +239,7 @@ def main():
                   str(sum([p.numel() for p in model.parameters()])))
     torch.save(args, os.path.join(args.save, 'args.pth'))
     scores = [
-        'epoch\ttrain_loss\tval_loss\ttrain_err1\tval_err1\ttrain_err5\tval_err']
+        'epoch\tlr\ttrain_loss\tval_loss\ttrain_err1\tval_err1\ttrain_err5\tval_err']
     if args.tensorboard:
         configure(args.save, flush_secs=5)
 
@@ -268,26 +272,18 @@ def main():
 
         # save scores to a tsv file, rewrite the whole file to prevent
         # accidental deletion
-        scores.append(
-            ('{}' +
-             '\t{:.4f}' *
-             6).format(
-                epoch,
-                train_loss,
-                val_loss,
-                train_err1,
-                val_err1,
-                train_err5,
-                val_err5))
+        scores.append(('{}\t{}' + '\t{:.4f}' * 6)
+                      .format(epoch, lr, train_loss, val_loss,
+                              train_err1, val_err1, train_err5, val_err5))
         with open(os.path.join(args.save, 'scores.tsv'), 'w') as f:
             print('\n'.join(scores), file=f)
 
         # remember best err@1 and save checkpoint
         is_best = val_err1 < best_err1
         if is_best:
-            print('Best')
             best_err1 = val_err1
             best_epoch = epoch
+            print(Fore.GREEN + 'Best var_err1 {}'.format(best_err1) + Fore.RESET)
             # test_loss, test_err1, test_err1 = validate(
             #     test_loader, model, criterion, epoch, True)
             # save test
