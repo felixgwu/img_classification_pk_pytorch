@@ -96,6 +96,11 @@ tensorboard --logdir save --port PORT
 - [ ] Iteration mode (Counting iterations instead of epochs)
 
 ## Results
+### Top1 Error Rate (in percentage)
+| Model      | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
+|------------|----------|-----------|-----------|------------|------------|------|
+| ResNet-56  |          | 6.42      | 42.88     |            |            |      |
+| ResNet-110 |          | 6.16      |           |            |            |      |
 
 ## References
 
