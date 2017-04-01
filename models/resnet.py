@@ -60,6 +60,6 @@ class ResNetCifar(nn.Module):
 
         return x
 
-def createModel(depth, data, num_classes):
+def createModel(depth, data, num_classes, **kwargs):
     print('Create ResNet-{:d} for {}'.format(depth, data)) 
     return ResNetCifar(depth, BasicBlock, num_classes)
