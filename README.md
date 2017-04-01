@@ -68,6 +68,7 @@ tensorboard --logdir save --port PORT
 - SVHN
  - [ ] SVHN-small (without extra training data)
  - [ ] SVHN
+- [ ] MNIST
 - [ ] ImageNet
 
 ### Others
@@ -87,10 +88,7 @@ tensorboard --logdir save --port PORT
 - [ ] Custom datasets tutorial
 - [ ] Custom initialization
 - [ ] Adding an example project killing scenario
-- [ ] SVHN & MNIST
-- [ ] Checking Python 2 compatibility
 - [ ] Adding license
-- [ ] Adding links
 - [ ] Pretrained models
 - [ ] Pep8 check
 - [ ] Iteration mode (Counting iterations instead of epochs)
