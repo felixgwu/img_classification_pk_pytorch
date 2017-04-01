@@ -70,7 +70,6 @@ tensorboard --logdir save --port PORT
 - [ ] Tutorials
 
 ### Todo List
-- [ ] Adding iteration mode (counting iterations instead of epochs)
 - [ ] Comparing tensorboard\_logger v.s. pycrayon
 - [ ] Adding result table
 - [ ] Adding example scripts
@@ -88,7 +87,6 @@ tensorboard --logdir save --port PORT
 - [ ] Pretrained models
 - [ ] Pep8 check
 - [ ] Iteration mode (Counting iterations instead of epochs)
-- [ ] Considering switching to torch.util.trainer framework
 
 ## Results
 
