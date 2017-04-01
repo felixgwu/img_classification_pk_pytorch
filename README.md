@@ -46,17 +46,17 @@ tensorboard --logdir save --port PORT
 - [ ] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
 - [ ] Multiple learning rate decay strategies
 
-### Models
+### Models (See *models* folder for details)
 - [ ] AlexNet ([paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks))
 - [ ] VGGNet ([paper](https://arxiv.org/abs/1409.1556))
 - [ ] SqueezeNet ([paper](https://arxiv.org/abs/1602.07360)) ([code](https://github.com/DeepScale/SqueezeNet))
 - [x] ResNet ([paper](https://arxiv.org/abs/1512.03385)) ([code](https://github.com/facebook/fb.resnet.torch))
-- [ ] ResNet with stochastic depth ([paper](https://arxiv.org/abs/1603.09382)) ((code)[https://github.com/yueatsprograms/Stochastic_Depth])
+- [ ] ResNet with stochastic depth ([paper](https://arxiv.org/abs/1603.09382)) ([code](https://github.com/yueatsprograms/Stochastic_Depth))
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
 - [ ] DenseNet (coming soon) ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
-- [ ] MSDNet ([paper](https://arxiv.org/abs/1703.09844)) ([code][https://github.com/gaohuang/MSDNet])
+- [ ] MSDNet ([paper](https://arxiv.org/abs/1703.09844)) ([code](https://github.com/gaohuang/MSDNet))
 - [ ] Steerable CNN ([paper](https://arxiv.org/abs/1612.08498))
 
 ### Datasets
