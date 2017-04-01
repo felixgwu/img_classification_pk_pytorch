@@ -64,7 +64,7 @@ tensorboard --logdir save --port PORT
 - [ ] Steerable CNN ([paper](https://arxiv.org/abs/1612.08498))
 
 ### Datasets
-- CIFAR (Last 5000 samples in the original training set is used for validation)
+1. CIFAR (Last 5000 samples in the original training set is used for validation)
  - CIFAR-10
  - CIFAR-10+ (Horizontal flip and random cropping with padding 4)
  - CIFAR-100
