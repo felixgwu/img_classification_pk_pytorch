@@ -18,7 +18,7 @@ for i in range(1, len(sys.argv)):
         scores = torch.Tensor(scores)
         _, argmax = scores.min(0)
         best_rol = scores[argmax[0, name2col['val_err1']], :]
-        print((path_part + '{:8d} {:10d} {:10.4f} {:10.4f}')
+        print((path_part + '{:8d} {:10d} {:10.2f} {:10.2f}')
               .format(sys.argv[i], scores.size(0),
                       int(best_rol[name2col['epoch']]),
                       best_rol[name2col['train_err1']],
