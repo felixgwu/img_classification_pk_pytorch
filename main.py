@@ -8,6 +8,7 @@ import argparse
 import os
 import shutil
 import time
+import sys
 
 import torch
 import torch.nn as nn
@@ -112,7 +113,7 @@ parser.add_argument('--patience', default=0, type=int, metavar='N',
                     help='patience for early stopping'
                     '(0 means no early stopping)')
 
-best_err1 = 1
+best_err1 = 100.
 best_epoch = 0
 
 
@@ -196,7 +197,9 @@ def main():
     elif args.save.find('debug') < 0:
         print('Error:' + Fore.RED + args.save + Fore.RESET
               + ' already exists!', file=sys.stderr)
-        return
+        ans = input('Do you want to overwrite it? [y/N]:')
+        if ans not in ('y', 'Y', 'yes', 'Yes'):
+            os.exit(1)
 
     # copy code to save folder
     if args.save.find('debug') < 0:

@@ -1,5 +1,6 @@
-import torch
 import os
+import shutil
+import torch
 
 
 def adjust_learning_rate(optimizer, lr_init, decay_rate, epoch, num_epochs):
