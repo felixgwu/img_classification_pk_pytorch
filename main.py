@@ -301,7 +301,7 @@ def main():
         }, is_best, args.save)
         if not is_best and epoch - best_epoch >= args.patience > 0:
             break
-    print('Best val_err1: {.4f} at epoch {}'.format(best_err1, best_epoch))
+    print('Best val_err1: {:.4f} at epoch {}'.format(best_err1, best_epoch))
 
 
 def train(train_loader, model, criterion, optimizer, epoch):
