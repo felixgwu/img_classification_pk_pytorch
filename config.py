@@ -5,7 +5,7 @@ datasets = {
         'num_classes': 10,
         'augmentation': False,
     },
-    'cifar10': {
+    'cifar10+': {
         'num_classes': 10,
         'augmentation': True,
     },
