@@ -65,23 +65,22 @@ tensorboard --logdir save --port PORT
 
 ### Datasets
 - CIFAR (Last 5000 samples in the original training set is used for validation)
- - [x] CIFAR-10
- - [x] CIFAR-10+ (Horizontal flip and random cropping with padding 4)
- - [x] CIFAR-100
- - [x] CIFAR-100+ (Horizontal flip and random cropping with padding 4)
-- SVHN
- - [ ] SVHN-small (without extra training data)
- - [ ] SVHN
-- [ ] MNIST
-- [ ] ImageNet
+ - CIFAR-10
+ - CIFAR-10+ (Horizontal flip and random cropping with padding 4)
+ - CIFAR-100
+ - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
+
 
 ### Others
-- [x] Learning rate scheduler
-- [x] Test resume
-- [ ] Result table
-- [ ] Tutorials
+- Learning rate scheduler
+- Test resume
+- Result table
 
 ### Todo List
+- [ ] SVHN-small (without extra training data)
+- [ ] SVHN
+- [ ] MNIST
+- [ ] ImageNet
 - [ ] Comparing tensorboard\_logger v.s. pycrayon
 - [ ] Adding result table
 - [ ] Adding example scripts
