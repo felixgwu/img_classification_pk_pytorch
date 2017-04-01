@@ -9,10 +9,15 @@ Please feel free to summit issues or pull requests if you want to contribute.
 Use `python3 main.py -h` to show all arguments.
 
 ### Training
-Train a ResNet-56 on CIFAR-10 with data augmentation:
+Train a ResNet-56 on CIFAR-10 with data augmentation using GPU0:
 ```sh
-python3 main.py --data cifar10+ --arch resnet --depth 56 --save save/resnet-56 --epochs 164
+CUDA_VISIBLE_DEVICES=0 python3 main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
 ```
+Train a ResNet-110 on CIFAR-100 without data augmentation using GPU0 and GPU2:
+```sh
+CUDA_VISIBLE_DEVICES=0,2 python3 main.py --data cifar100 --arch resnet --depth 110 --save save/cifar100-resnet-110 --epochs 164
+```
+
 See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ### Evaluation
 ```sh
@@ -41,8 +46,7 @@ tensorboard --logdir save --port PORT
 - [x] Display training time
 - [x] Holding out testing set and using validation set for hyperparameter tuning experiments
 - [ ] CPU support
-- [x] Single GPU support
-- [ ] Multiple GPUs support
+- [x] GPU support
 - [ ] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
 - [ ] Multiple learning rate decay strategies
 
