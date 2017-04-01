@@ -18,15 +18,26 @@ See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ```sh
 python3 main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
 ```
+### Using Tensorboard
+```sh
+tensorboard --logdir save --port PORT
+```
 
 ## Features
 
-### Experiment
-- [ ] Preventing overwriting previous experiments
-- [ ] Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
-- [ ] Automatically copying all source code to saving directory to prevent
-- [ ] TensorBoard support using tensorboard_logger
-- [ ] One script to show all experiment results
+### Experiment Setup & Logging
+- [x] Preventing overwriting previous experiments
+- [x] Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
+- [x] Automatically copying all source code to saving directory to prevent
+- [x] TensorBoard support using tensorboard_logger
+- [x] One script to show all experiment results
+- [x] Display training time
+- [ ] Holding out testing set and use validation set for training
+- [ ] CPU support
+- [x] Single GPU support
+- [ ] Multiple GPUs support
+- [ ] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
+- [ ] Multiple learning rate decay strategies
 
 ### Models
 - [ ] AlexNet
@@ -42,53 +53,48 @@ python3 main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --dat
 - [ ] Steerable CNN
 
 ### Datasets
-- [x] CIFAR-10
-- [x] CIFAR-10+ (Horizontal flip and random cropping with padding 4)
-- [x] CIFAR-100
-- [x] CIFAR-100+ (Horizontal flip and random cropping with padding 4)
-- [ ] SVHN-small (without extra training data)
-- [ ] SVHN
+- CIFAR (Last 5000 samples in the original training set is used for validation)
+ - [x] CIFAR-10
+ - [x] CIFAR-10+ (Horizontal flip and random cropping with padding 4)
+ - [x] CIFAR-100
+ - [x] CIFAR-100+ (Horizontal flip and random cropping with padding 4)
+- SVHN
+ - [ ] SVHN-small (without extra training data)
+ - [ ] SVHN
 - [ ] ImageNet
 
-## Progress
-- [x] CIFAR 10 & 100
-- [x] Progressbar
-- [x] Logging
-- [x] Data Augmentation
-- [x] Copying experiment code automatically
-- [x] Training, Validation, Testing split (Hiding test errors to prevent overfitting the testing set)
+### Others
 - [x] Learning rate scheduler
 - [x] Test resume
-- [ ] DenseNet
-- [ ] AlexNet, VGGNet, SqueezeNet
+- [ ] Result table
+- [ ] Tutorials
+
+### Todo List
+- [ ] Adding iteration mode (counting iterations instead of epochs)
+- [ ] Comparing tensorboard\_logger v.s. pycrayon
 - [ ] Adding result table
 - [ ] Adding example scripts
-- [ ] Extend README file
+- [ ] Comparing tensorboard\_logger v.s. pycrayon
 - [ ] Adding acknowledgement
-- [ ] Multiple GPU support
 - [ ] Custom models & criterions tutorial
 - [ ] Custom train & test functions tutorial
-- [ ] Custom initialization
-- [ ] Adding an example project killing scenario 
-- [ ] SVHN & MNIST
 - [ ] Custom datasets tutorial
-- [ ] Python 2.7 support
+- [ ] Custom initialization
+- [ ] Adding an example project killing scenario
+- [ ] SVHN & MNIST
+- [ ] Checking Python 2 compatibility
 - [ ] Adding license
-- [ ] ImageNet
-- [ ] Comparing tensorboard\_logger v.s. pycrayon
+- [ ] Adding links
 - [ ] Pretrained models
 - [ ] Pep8 check
 - [ ] Iteration mode (Counting iterations instead of epochs)
 - [ ] Considering switching to torch.util.trainer framework
-- [ ] ResNext
-- [ ] ResNet with stochastic depth
-- [ ] MSDNet 
-- [ ] Checking the checkboxes
-- [ ] CPU support
 
 ## Results
 
 ## References
 
 ## Acknowledgement
-This code is based on the ImageNet training script provided in [PyTorch examples](https://github.com/pytorch/examples/blob/master/imagenet/main.py)
+This code is based on the ImageNet training script provided in [PyTorch examples](https://github.com/pytorch/examples/blob/master/imagenet/main.py).
+
+The author is not familiar with licensing. Please contact me there is there are any problems with it.
