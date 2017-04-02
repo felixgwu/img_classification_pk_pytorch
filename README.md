@@ -40,7 +40,7 @@ tensorboard --logdir save --port PORT
 ### Experiment Setup & Logging
 - Preventing overwriting previous experiments
 - Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
-- Automatically copying all source code to saving directory to prevent
+- Automatically copying all source code to saving directory to prevent accidental deleteion of codes. This is inspired by [WGAN code](https://github.com/xunhuang1995/SGAN/tree/master/mnist).
 - [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) support using [tensorboard\_logger](https://github.com/TeamHG-Memex/tensorboard_logger)
 - One script to show all experiment results
 - Display training time
