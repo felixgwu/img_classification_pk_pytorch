@@ -38,17 +38,16 @@ tensorboard --logdir save --port PORT
 ## Features
 
 ### Experiment Setup & Logging
-- [x] Preventing overwriting previous experiments
-- [x] Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
-- [x] Automatically copying all source code to saving directory to prevent
-- [x] TensorBoard support using tensorboard\_logger
-- [x] One script to show all experiment results
-- [x] Display training time
-- [x] Holding out testing set and using validation set for hyperparameter tuning experiments
-- [ ] CPU support
-- [x] GPU support
-- [x] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
-- [ ] Multiple learning rate decay strategies
+- Preventing overwriting previous experiments
+- Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
+- Automatically copying all source code to saving directory to prevent
+- [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) support using [tensorboard\_logger](https://github.com/TeamHG-Memex/tensorboard_logger)
+- One script to show all experiment results
+- Display training time
+- Holding out testing set and using validation set for hyperparameter tuning experiments
+- GPU support
+- Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and trained models
+
 
 ### Models (See *models* folder for details)
 - [ ] AlexNet ([paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks))
@@ -78,13 +77,12 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - Result table
 
 ### Todo List
+- [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
+- [ ] CPU support
 - [ ] SVHN-small (without extra training data)
 - [ ] SVHN
 - [ ] MNIST
 - [ ] ImageNet
-- [ ] Comparing tensorboard\_logger v.s. pycrayon
-- [ ] Adding result table
-- [ ] Adding example scripts
 - [ ] Comparing tensorboard\_logger v.s. pycrayon
 - [ ] Adding acknowledgement
 - [ ] Custom models & criterions tutorial
@@ -108,6 +106,15 @@ The number of parameters are calculated based on CIFAR-10 model.
 | DenseNet (k=12, d=40)    |            |          |           |           |            |            |      |
 | DenseNet-BC (k=12,d=100) |            |          |           |           |            |            |      |
 | Your model               |            |          |           |           |            |            |      |
+
+## File Descriptions
+- *main.py*: main script to train or evaluate models
+- *config*: storing configuration of datasets (and maybe other things in the future)
+- *utils.pypy*: useful functions
+- *getbest.py*: display the best validation error of each saving folder
+- *dataloader.py*: defines *getDataloaders* function which is used to load datasets
+- *models*: a folder storing all network models. Each script in it should contain a *createModel(\*\*kwargs)* function that takes the arguments and return a model (subclass of nn.Module) for training
+- *scripts*: a folder storing example training commands in UNIX shell scripts
 
 ## References
 
