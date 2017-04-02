@@ -3,6 +3,10 @@
 # This code supports original DenseNet as well
 
 import math
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from collections import OrderedDict
 from torchvision.models.densenet import _Transition
 
 class _DenseLayer(nn.Sequential):
@@ -48,12 +52,13 @@ class DenseNet(nn.Module):
         drop_rate (float) - dropout rate after each dense layer
         num_classes (int) - number of classification classes
     """
-    def __init__(self, growth_rate=12, block_config=(16, 16, 16), compression=0.5
+    def __init__(self, growth_rate=12, block_config=(16, 16, 16), compression=0.5,
                  num_init_features=16, bn_size=4, drop_rate=0, avgpool_size=8,
                  num_classes=10):
 
         super(DenseNet, self).__init__()
         assert 0 < compression <= 1, 'compression of densenet should be between '
+        self.avgpool_size = avgpool_size
 
         # First convolution
         self.features = nn.Sequential(OrderedDict([
@@ -88,23 +93,23 @@ class DenseNet(nn.Module):
         return out
 
 
-def createModel(depth=100, growth_rate=12, num_classes=10, drop_rate=0,
+def createModel(data, depth=100, growth_rate=12, num_classes=10, drop_rate=0,
                 compression=0.5, bn_size=4, **kwargs):
     # 
     assert (depth - 4) % 3 == 0, 'depth should be one of 3N+4'
-    avgpool_size = 7 if kwargs['data'] == 'imagenet' else 8
+    avgpool_size = 7 if data == 'imagenet' else 8
     N = (depth - 4) // 3
     suffix = '-'
     if bn_size > 0:
         N //= 2
         suffix += 'B'
     block_config = (N, N, N)
-    if reduction != 1:
+    if compression < 1.:
         suffix += 'C'
 
     if suffix == '-':
         suffix = ''
     print('Create DenseNet{}-{:d} for {}'.format(suffix, depth, data)) 
     return DenseNet(growth_rate=growth_rate, num_classes=num_classes,
-                    reduction=reduction, drop_rate=drop_rate, bn_size=bn_size
+                    compression=compression, drop_rate=drop_rate, bn_size=bn_size,
                     block_config=block_config, avgpool_size=avgpool_size)

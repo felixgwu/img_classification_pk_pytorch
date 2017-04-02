@@ -41,13 +41,13 @@ tensorboard --logdir save --port PORT
 - [x] Preventing overwriting previous experiments
 - [x] Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
 - [x] Automatically copying all source code to saving directory to prevent
-- [x] TensorBoard support using tensorboard_logger
+- [x] TensorBoard support using tensorboard\_logger
 - [x] One script to show all experiment results
 - [x] Display training time
 - [x] Holding out testing set and using validation set for hyperparameter tuning experiments
 - [ ] CPU support
 - [x] GPU support
-- [ ] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
+- [x] Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and models
 - [ ] Multiple learning rate decay strategies
 
 ### Models (See *models* folder for details)
@@ -59,16 +59,17 @@ tensorboard --logdir save --port PORT
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
-- [ ] DenseNet (coming soon) ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
+- [x] DenseNet (coming soon) ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
 - [ ] MSDNet ([paper](https://arxiv.org/abs/1703.09844)) ([code](https://github.com/gaohuang/MSDNet))
 - [ ] Steerable CNN ([paper](https://arxiv.org/abs/1612.08498))
 
 ### Datasets
-1. CIFAR (Last 5000 samples in the original training set is used for validation)
- - CIFAR-10
- - CIFAR-10+ (Horizontal flip and random cropping with padding 4)
- - CIFAR-100
- - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
+#### CIFAR
+Last 5000 samples in the original training set is used for validation. Each pixel is in [0, 1]. Based on experiments results, normalizing the data to zero mean and unit standard deviation seems to be redundant.
+- CIFAR-10
+- CIFAR-10+ (Horizontal flip and random cropping with padding 4)
+- CIFAR-100
+- CIFAR-100+ (Horizontal flip and random cropping with padding 4)
 
 
 ### Others
@@ -100,10 +101,13 @@ tensorboard --logdir save --port PORT
 ### Top1 Validation Error Rate (in percentage)
 The number of parameters are calculated based on CIFAR-10 model.
 
-| Model      | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
-|------------| -----------|----------|-----------|-----------|------------|------------|------|
-| ResNet-56  | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
-| ResNet-110 | 1.73M      |          | 6.16      | 47.04     |            |            |      |
+| Model                    | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
+|--------------------------| -----------|----------|-----------|-----------|------------|------------|------|
+| ResNet-56                | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
+| ResNet-110               | 1.73M      | 14.26    | 6.16      | 47.04     |            |            |      |
+| DenseNet (k=12, d=40)    |            |          |           |           |            |            |      |
+| DenseNet-BC (k=12,d=100) |            |          |           |           |            |            |      |
+| Your model               |            |          |           |           |            |            |      |
 
 ## References
 
