@@ -77,7 +77,11 @@ parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet', type=str,
 parser.add_argument('-d', '--depth', default=56, type=int, metavar='D',
                     help='depth (default=56)')
 parser.add_argument('--drop-rate', default=0.0, type=float,
-                    metavar='LR', help='dropout rate (default: 0.2)')
+                    metavar='DROPRATE', help='dropout rate (default: 0.2)')
+parser.add_argument('--bn-size', default=4, type=int,
+                    metavar='B', help='bottle neck ratio for DenseNet (0 means dot\'t use bottle necks) (default: 4)')
+parser.add_argument('--compression', default=0.5, type=float,
+                    metavar='C', help='compression ratio for DenseNet (1 means dot\'t use compression) (default: 0.5)')
 
 # training related
 parser.add_argument('--epochs', default=164, type=int, metavar='N',

@@ -103,7 +103,7 @@ The number of parameters are calculated based on CIFAR-10 model.
 | Model      | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
 |------------| -----------|----------|-----------|-----------|------------|------------|------|
 | ResNet-56  | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
-| ResNet-110 | 1.73M      | 14.36    | 6.16      | 47.04     |            |            |      |
+| ResNet-110 | 1.73M      |          | 6.16      | 47.04     |            |            |      |
 
 ## References
 
