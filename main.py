@@ -249,7 +249,7 @@ def main():
             args.decay_rate,
             epoch,
             args.epochs)  # TODO: add custom
-        print('Epoch {:3d} lr = {}'.format(epoch, lr))
+        print('Epoch {:3d} lr = {:.6e}'.format(epoch, lr))
         if args.tensorboard:
             log_value('lr', lr, epoch)
 
