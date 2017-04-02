@@ -8,7 +8,7 @@ path_len = max(0, *map(len, sys.argv[1:]))
 path_part = '{:' + str(path_len) + '}'
 
 print((path_part + ' {:8} {:10} {:10} {:10}')
-      .format('Path', 'n_epochs', 'best_epoch', 'train_err1', 'test_err1'))
+      .format('Path', 'n_epochs', 'best_epoch', 'train_err1', 'val_err1'))
 for i in range(1, len(sys.argv)):
     try:
         with open(os.path.join(sys.argv[i], 'scores.tsv')) as f:
