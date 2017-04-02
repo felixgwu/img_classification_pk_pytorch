@@ -1,3 +1,6 @@
+# This implementation is based on the DenseNet implementation in torchvision
+# https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py
+
 import math
 from torch import nn
 from torchvision.models.resnet import BasicBlock
