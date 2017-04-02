@@ -1,5 +1,4 @@
 # Image Classification Project Killer in PyTorch
-Happy April Fools' Day!
 This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours.
 Inspired by [fb.torch.resnet](https://github.com/facebook/fb.resnet.torch),
 it provides fast experiment setup and attempts to maximize the number of projects killed within the given time.
