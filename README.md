@@ -59,7 +59,7 @@ tensorboard --logdir save --port PORT
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
-- [x] DenseNet (coming soon) ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
+- [x] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
 - [ ] MSDNet ([paper](https://arxiv.org/abs/1703.09844)) ([code](https://github.com/gaohuang/MSDNet))
 - [ ] Steerable CNN ([paper](https://arxiv.org/abs/1612.08498))
 
@@ -72,6 +72,7 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
 
 ### Todo List
+- [ ] Python 2.7 support
 - [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
 - [ ] CPU support
 - [ ] SVHN-small (without extra training data)
@@ -103,6 +104,9 @@ Both are using batch_size=64.
 | DenseNet (k=12, d=40)    |            |          |           |           |            |            |      |
 | DenseNet-BC (k=12,d=100) |            |          |           |           |            |            |      |
 | Your model               |            |          |           |           |            |            |      |
+
+### Top1 Testing Error Rate (in percentage)
+Coming soon...
 
 ## File Descriptions
 - *main.py*: main script to train or evaluate models
