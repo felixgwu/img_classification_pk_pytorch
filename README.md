@@ -40,13 +40,14 @@ tensorboard --logdir save --port PORT
 ### Experiment Setup & Logging
 - Preventing overwriting previous experiments
 - Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
-- Automatically copying all source code to saving directory to prevent accidental deleteion of codes. This is inspired by [WGAN code](https://github.com/xunhuang1995/SGAN/tree/master/mnist).
+- Automatically copying all source code to saving directory to prevent accidental deleteion of codes. This is inspired by [SGAN code](https://github.com/xunhuang1995/SGAN/tree/master/mnist).
 - [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) support using [tensorboard\_logger](https://github.com/TeamHG-Memex/tensorboard_logger)
 - One script to show all experiment results
 - Display training time
 - Holding out testing set and using validation set for hyperparameter tuning experiments
 - GPU support
 - Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and trained models
+- result table
 
 
 ### Models (See *models* folder for details)
@@ -69,12 +70,6 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - CIFAR-10+ (Horizontal flip and random cropping with padding 4)
 - CIFAR-100
 - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
-
-
-### Others
-- Learning rate scheduler
-- Test resume
-- Result table
 
 ### Todo List
 - [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
