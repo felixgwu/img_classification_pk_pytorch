@@ -54,7 +54,7 @@ tensorboard --logdir save --port PORT
 - [ ] VGGNet ([paper](https://arxiv.org/abs/1409.1556))
 - [ ] SqueezeNet ([paper](https://arxiv.org/abs/1602.07360)) ([code](https://github.com/DeepScale/SqueezeNet))
 - [x] ResNet ([paper](https://arxiv.org/abs/1512.03385)) ([code](https://github.com/facebook/fb.resnet.torch))
-- [ ] ResNet with stochastic depth ([paper](https://arxiv.org/abs/1603.09382)) ([code](https://github.com/yueatsprograms/Stochastic_Depth))
+- [x] ResNet with stochastic depth ([paper](https://arxiv.org/abs/1603.09382)) ([code](https://github.com/yueatsprograms/Stochastic_Depth))
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
@@ -95,7 +95,7 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 ### Top1 Validation Error Rate (in percentage)
 The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (like default in fb.resnet.torch) and DenseNets were trained 300 epochs.
-Both are using batch_size=64.
+Both are using batch\_size=64.
 
 | Model                    | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
 |--------------------------| -----------|----------|-----------|-----------|------------|------------|------|
