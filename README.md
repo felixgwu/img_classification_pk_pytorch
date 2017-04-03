@@ -71,6 +71,7 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
 
 ### Todo List
+- [ ] copy the old results to */tmp* before overwriting them
 - [ ] Python 2.7 support
 - [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
 - [ ] CPU support
