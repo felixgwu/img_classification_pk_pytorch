@@ -21,45 +21,40 @@ def getDataloaders(data, config_of_data, splits=['train', 'val', 'test'],
                                              std=[0.2675, 0.2565, 0.2761])
         if config_of_data['augmentation']:
             print('with data augmentation')
-            ts = [
+            aug_trans = [
                 transforms.RandomCrop(32, padding=4),
                 transforms.RandomHorizontalFlip(),
-                transforms.ToTensor(),
             ]
         else:
-            ts = [
-                transforms.ToTensor(),
-            ]
+            aug_trans = []
+        common_trans = [transforms.ToTensor()]
         if normalized:
             print('dataset is normalized')
-            ts.append(normalize)
-        ts = transforms.Compose(ts)
+            common_trans.append(normalize)
+        train_compose = transforms.Compose(aug_trans + common_trans)
+        test_compose = transforms.Compose(common_trans)
 
         # uses last 5000 images of the original training split as the
         # validation set
-        if 'train' in splits or 'val' in splits:
-            trainvalset = d_func(
-                data_root,
-                train=True,
-                transform=ts,
-                download=True)
         if 'train' in splits:
+            train_set = d_func(data_root, train=True, transform=train_compose,
+                               download=True)
             train_loader = torch.utils.data.DataLoader(
-                trainvalset, batch_size=batch_size,
+                train_set, batch_size=batch_size,
                 sampler=torch.utils.data.sampler.SubsetRandomSampler(
                     range(45000)),
                 num_workers=num_workers, pin_memory=True)
         if 'val' in splits:
+            val_set = d_func(data_root, train=True, transform=test_compose)
             val_loader = torch.utils.data.DataLoader(
-                trainvalset, batch_size=batch_size,
+                val_set, batch_size=batch_size,
                 sampler=torch.utils.data.sampler.SubsetRandomSampler(
-                    range( 45000, 50000)),
+                    range(45000, 50000)),
                 num_workers=num_workers, pin_memory=True)
         if 'test' in splits:
-            testset = d_func(data_root, train=False,
-                transform=ts, download=True)
+            test_set = d_func(data_root, train=False, transform=test_compose)
             test_loader = torch.utils.data.DataLoader(
-                testset, batch_size=batch_size, shuffle=True,
+                test_set, batch_size=batch_size, shuffle=True,
                 num_workers=num_workers, pin_memory=True)
     else:
         raise NotImplemented
