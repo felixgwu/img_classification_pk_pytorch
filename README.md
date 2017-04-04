@@ -76,7 +76,6 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
 
 ### Todo List
-- [ ] Python 2.7 support
 - [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
 - [ ] CPU support
 - [ ] SVHN-small (without extra training data)
@@ -92,23 +91,22 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - [ ] Adding an example project killing scenario
 - [ ] Adding license
 - [ ] Pretrained models
-- [ ] Pep8 check
 - [ ] Iteration mode (Counting iterations instead of epochs)
+- [ ] Pep8 check
 
 ## Results
-### Top1 Validation Error Rate (in percentage)
+### Test Error Rate (in percentage)
 The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (like default in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
 
-| Model                    | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
-|--------------------------| -----------|----------|-----------|-----------|------------|------------|------|
-| ResNet-56                | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
-| ResNet-110               | 1.73M      | 14.26    | 6.16      | 47.04     | 28.54      |            |      |
-| ResNet-110 (b)
-| DenseNet-40 (k=12, b)    |            |          |           |           |            |            |      |
-| DenseNet-BC-100 (k=12) |            |          |  4.92         |           |            |            |      |
-| Your model               |            |          |           |           |            |            |      |
+| Model                                   | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ |
+|-----------------------------------------| -----------|----------|-----------|-----------|------------|
+| ResNet-56                               | 0.86M      |          | 6.82      |           |            |
+| ResNet-110                              | 1.73M      |          |           |           |            |
+| ResNet-110 with Stochastic Depth        | 1.73M      |          | 5.25      |           |            |
+| DenseNet-BC-100 (k=12)                  |            |          |           |           |            |
+| Your model                              |            |          |           |           |            |
 
 ### Top1 Testing Error Rate (in percentage)
 Coming soon...
