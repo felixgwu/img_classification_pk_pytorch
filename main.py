@@ -85,15 +85,18 @@ arch_group.add_argument('--death-mode', default='none',
                         help='death mode (default: none)')
 arch_group.add_argument('--death-rate', default=0.5, type=float,
                         help='death rate rate (default: 0.5)')
+arch_group.add_argument('--growth-rate', default=12, type=int,
+                        metavar='GR', help='Growth rate of DenseNet'
+                        ' (1 means dot\'t use compression) (default: 0.5)')
 arch_group.add_argument('--bn-size', default=4, type=int,
-                        metavar='B', help='bottle neck ratio for DenseNet'
+                        metavar='B', help='bottle neck ratio of DenseNet'
                         ' (0 means dot\'t use bottle necks) (default: 4)')
 arch_group.add_argument('--compression', default=0.5, type=float,
-                        metavar='C', help='compression ratio for DenseNet'
+                        metavar='C', help='compression ratio of DenseNet'
                         ' (1 means dot\'t use compression) (default: 0.5)')
 # used to set the argument when to resume automatically
 arch_resume_names = ['arch', 'depth', 'death_mode', 'death_rate', 'death_rate',
-                     'bn_size', 'compression']
+                     'growth_rate', 'bn_size', 'compression']
 
 # training related
 optim_group = parser.add_argument_group('optimization', 'optimization setting')
@@ -223,7 +226,8 @@ def main():
                                        time.time())
         print('move existing {} to {}'.format(args.save, Fore.RED
                                               + tmp_path + Fore.RESET))
-        shutil.move(args.save, tmp_path)
+        shutil.copytree(args.save, tmp_path)
+        shutil.rmtree(args.save)
     os.makedirs(args.save)
     print('create folder: ' + Fore.GREEN + args.save + Fore.RESET)
 
@@ -255,12 +259,13 @@ def main():
         print(*args, file=f_log)
     log_print('args:')
     log_print(args)
-    log_print('model:')
-    log_print(model)
-    # log_print('optimizer:')
-    # log_print(vars(optimizer))
+    print('model:', file=f_log)
+    print(model, file=f_log)
+    print('optimizer:', file=f_log)
+    print(vars(optimizer), file=f_log)
     log_print('# of params:',
               str(sum([p.numel() for p in model.parameters()])))
+    f_log.flush()
     torch.save(args, os.path.join(args.save, 'args.pth'))
     scores = ['epoch\tlr\ttrain_loss\tval_loss\ttrain_err1'
               '\tval_err1\ttrain_err5\tval_err']

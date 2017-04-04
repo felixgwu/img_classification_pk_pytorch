@@ -5,22 +5,23 @@ it provides fast experiment setup and attempts to maximize the number of project
 Please feel free to summit issues or pull requests if you want to contribute.
 
 ## Usage
-Use `python3 main.py -h` to show all arguments.
+Both Python 2.7 and 3.5 are supported; however, it was mainly tested on Python 3.
+Use `python main.py -h` to show all arguments.
 
 ### Training
 Train a ResNet-56 on CIFAR-10 with data augmentation using GPU0:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python3 main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
+CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
 ```
 Train a ResNet-110 on CIFAR-100 without data augmentation using GPU0 and GPU2:
 ```sh
-CUDA_VISIBLE_DEVICES=0,2 python3 main.py --data cifar100 --arch resnet --depth 110 --save save/cifar100-resnet-110 --epochs 164
+CUDA_VISIBLE_DEVICES=0,2 python main.py --data cifar100 --arch resnet --depth 110 --save save/cifar100-resnet-110 --epochs 164
 ```
 
 See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ### Evaluation
 ```sh
-python3 main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
+python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
 ```
 ### Show Training & Validation Results
 #### Python script
@@ -47,6 +48,7 @@ tensorboard --logdir save --port PORT
 - GPU support
 - Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and trained models
 - Result table
+- Python 2.7 & 3.5 support
 
 
 ### Models (See *models* folder for details)
@@ -103,8 +105,9 @@ Both are using batch\_size=64.
 |--------------------------| -----------|----------|-----------|-----------|------------|------------|------|
 | ResNet-56                | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
 | ResNet-110               | 1.73M      | 14.26    | 6.16      | 47.04     | 28.54      |            |      |
-| DenseNet (k=12, d=40)    |            |          |           |           |            |            |      |
-| DenseNet-BC (k=12,d=100) |            |          |           |           |            |            |      |
+| ResNet-110 (b)
+| DenseNet-40 (k=12, b)    |            |          |           |           |            |            |      |
+| DenseNet-BC-100 (k=12) |            |          |  4.92         |           |            |            |      |
 | Your model               |            |          |           |           |            |            |      |
 
 ### Top1 Testing Error Rate (in percentage)

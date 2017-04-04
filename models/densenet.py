@@ -2,14 +2,15 @@
 # https://github.com/pytorch/vision/blob/master/torchvision/models/densenet.py
 # This code supports original DenseNet as well
 
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from collections import OrderedDict
 from torchvision.models.densenet import _Transition
 
+
 class _DenseLayer(nn.Sequential):
+
     def __init__(self, num_input_features, growth_rate, bn_size, drop_rate):
         super(_DenseLayer, self).__init__()
         self.add_module('norm.1', nn.BatchNorm2d(num_input_features)),
@@ -53,7 +54,7 @@ class DenseNet(nn.Module):
         num_classes (int) - number of classification classes
     """
     def __init__(self, growth_rate=12, block_config=(16, 16, 16), compression=0.5,
-                 num_init_features=16, bn_size=4, drop_rate=0, avgpool_size=8,
+                 num_init_features=24, bn_size=4, drop_rate=0, avgpool_size=8,
                  num_classes=10):
 
         super(DenseNet, self).__init__()
@@ -78,9 +79,10 @@ class DenseNet(nn.Module):
             num_features = num_features + num_layers * growth_rate
             if i != len(block_config) - 1:
                 trans = _Transition(num_input_features=num_features,
-                                    num_output_features=math.floor(num_features * compression))
+                                    num_output_features=int(num_features
+                                                            * compression))
                 self.features.add_module('transition%d' % (i + 1), trans)
-                num_features = math.floor(num_features * compression)
+                num_features = int(num_features * compression)
 
         # Final batch norm
         self.features.add_module('norm5', nn.BatchNorm2d(num_features))
@@ -98,8 +100,7 @@ class DenseNet(nn.Module):
 
 
 def createModel(data, depth=100, growth_rate=12, num_classes=10, drop_rate=0,
-                compression=0.5, bn_size=4, **kwargs):
-    # 
+                num_init_features=24, compression=0.5, bn_size=4, **kwargs):
     assert (depth - 4) % 3 == 0, 'depth should be one of 3N+4'
     avgpool_size = 7 if data == 'imagenet' else 8
     N = (depth - 4) // 3
