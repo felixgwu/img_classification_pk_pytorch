@@ -92,7 +92,7 @@ arch_group.add_argument('--compression', default=0.5, type=float,
                         metavar='C', help='compression ratio for DenseNet'
                         ' (1 means dot\'t use compression) (default: 0.5)')
 # used to set the argument when to resume automatically
-arch_resume_names = ['arch', 'depth', 'drop_mode', 'death_rate', 'death_rate',
+arch_resume_names = ['arch', 'depth', 'death_mode', 'death_rate', 'death_rate',
                      'bn_size', 'compression']
 
 # training related
