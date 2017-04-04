@@ -9,7 +9,8 @@
 # ResNet with Stochastic Depth
 # python3 main.py --arch resnet --depth 56 --save save/cifar10+-resnet-stoch-56 --data cifar10+ --epochs 164 --death-mode linear --death-rate 0.5
 # python3 main.py --arch resnet --depth 110 --save save/cifar10+-resnet-stoch-110 --data cifar10+ --epochs 164 --death-mode linear --death-rate 0.5
-python3 main.py --arch resnet --depth 110 --save save/cifar10+-resnet-stoch-110-e500 --data cifar10+ --epochs 500 --batch-size 128 --death-mode linear --death-rate 0.5
+# python3 main.py --arch resnet --depth 110 --save save/cifar10+-resnet-stoch-110-e500 --data cifar10+ --epochs 500 --batch-size 128 --death-mode linear --death-rate 0.5
+python3 main.py --arch resnet --depth 110 --save save/cifar10+-resnet-stoch-110-e500-b128-normalized --data cifar10+ --epochs 500 --batch-size 128 --death-mode linear --death-rate 0.5 --normalized
 
 
 # DenseNet
