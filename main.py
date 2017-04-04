@@ -219,8 +219,11 @@ def main():
             ans = input('Do you want to overwrite it? [y/N]:')
             if ans not in ('y', 'Y', 'yes', 'Yes'):
                 os.exit(1)
-        print('remove existing ' + args.save)
-        shutil.rmtree(args.save)
+        tmp_path = '/tmp/{}_{}'.format(os.path.basename(args.save),
+                                       time.time())
+        print('move existing {} to {}'.format(args.save, Fore.RED
+                                              + tmp_path + Fore.RESET))
+        shutil.move(args.save, tmp_path)
     os.makedirs(args.save)
     print('create folder: ' + Fore.GREEN + args.save + Fore.RESET)
 
