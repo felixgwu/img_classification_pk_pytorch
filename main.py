@@ -163,7 +163,8 @@ def main():
             best_epoch = args.start_epoch - 1
             best_err1 = checkpoint['best_err1']
             for name in arch_resume_names:
-                setattr(args, name, getattr(old_args, name))
+                if name in vars(args) and name in vars(old_args):
+                    setattr(args, name, getattr(old_args, name))
             model = getModel(**vars(args))
             model.load_state_dict(checkpoint['state_dict'])
             print("=> loaded checkpoint '{}' (epoch {})"
