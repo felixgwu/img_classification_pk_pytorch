@@ -261,8 +261,6 @@ def main():
     log_print(args)
     print('model:', file=f_log)
     print(model, file=f_log)
-    print('optimizer:', file=f_log)
-    print(vars(optimizer), file=f_log)
     log_print('# of params:',
               str(sum([p.numel() for p in model.parameters()])))
     f_log.flush()
