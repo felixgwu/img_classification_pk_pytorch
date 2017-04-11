@@ -1,8 +1,8 @@
 # Image Classification Project Killer in PyTorch
-This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours.
+This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours. :new_moon_with_face:
 Inspired by [fb.torch.resnet](https://github.com/facebook/fb.resnet.torch),
 it provides fast experiment setup and attempts to maximize the number of projects killed within the given time.
-Please feel free to summit issues or pull requests if you want to contribute.
+Please feel free to submit issues or pull requests if you want to contribute.
 
 ## Usage
 Both Python 2.7 and 3.5 are supported; however, it was mainly tested on Python 3.
@@ -95,7 +95,7 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - [ ] Pep8 check
 
 ## Results
-### Test Error Rate (in percentage)
+### Test Error Rate (in percentage) **with** validation set
 The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (like default in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
@@ -104,7 +104,7 @@ Both are using batch\_size=64.
 |-----------------------------------------| -----------|----------|-----------|-----------|------------|
 | ResNet-56                               | 0.86M      |          | 6.82      |           |            |
 | ResNet-110                              | 1.73M      |          |           |           |            |
-| ResNet-110 with Stochastic Depth        | 1.73M      |          | 5.25      |           |            |
+| ResNet-110 with Stochastic Depth        | 1.73M      |          | 5.25      |           | 24.2       |
 | DenseNet-BC-100 (k=12)                  |            |          |           |           |            |
 | Your model                              |            |          |           |           |            |
 
