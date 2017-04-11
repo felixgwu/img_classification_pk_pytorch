@@ -21,8 +21,8 @@ from importlib import import_module
 
 import config
 from dataloader import getDataloaders
-from utils import (save_checkpoint, AverageMeter, adjust_learning_rate, error,
-                   get_optimizer)
+from utils import (save_checkpoint, get_optimizer)
+from train import Trainer
 
 try:
     from tensorboard_logger import configure, log_value
@@ -196,23 +196,26 @@ def main():
     # define loss function (criterion) and pptimizer
     criterion = nn.CrossEntropyLoss().cuda()
 
-    # create dataloader
-    if args.evaluate == 'val':
-        train_loader, val_loader, test_loader = getDataloaders(
-            splits=('val'), **vars(args))
-        validate(val_loader, model, criterion, best_epoch)
-        return
-    elif args.evaluate == 'test':
-        train_loader, val_loader, test_loader = getDataloaders(
-            splits=('test'), **vars(args))
-        validate(test_loader, model, criterion, best_epoch)
-        return
-    else:
-        train_loader, val_loader, test_loader = getDataloaders(
-            splits=('train', 'val'), **vars(args))
-
     # define optimizer
     optimizer = get_optimizer(model, args)
+
+    trainer = Trainer(model, criterion, optimizer, args)
+
+
+    # create dataloader
+    if args.evaluate == 'val':
+        _, val_loader, _ = getDataloaders(
+            splits=('val'), **vars(args))
+        trainer.test(val_loader, best_epoch)
+        return
+    elif args.evaluate == 'test':
+        _, _, test_loader = getDataloaders(
+            splits=('test'), **vars(args))
+        trainer.test(test_loader, best_epoch)
+        return
+    else:
+        train_loader, val_loader, _ = getDataloaders(
+            splits=('train', 'val'), **vars(args))
 
     # check if the folder exists
     if os.path.exists(args.save):
@@ -271,27 +274,20 @@ def main():
         configure(args.save, flush_secs=5)
 
     for epoch in range(args.start_epoch, args.epochs + 1):
-        lr = adjust_learning_rate(
-            optimizer,
-            args.lr,
-            args.decay_rate,
-            epoch,
-            args.epochs)  # TODO: add custom
-        print('Epoch {:3d} lr = {:.6e}'.format(epoch, lr))
-        if args.tensorboard:
-            log_value('lr', lr, epoch)
 
         # train for one epoch
-        train_loss, train_err1, train_err5 = train(
-            train_loader, model, criterion, optimizer, epoch)
+        train_loss, train_err1, train_err5, lr = trainer.train(
+            train_loader, epoch)
+
         if args.tensorboard:
+            log_value('lr', lr, epoch)
             log_value('train_loss', train_loss, epoch)
             log_value('train_err1', train_err1, epoch)
             log_value('train_err5', train_err5, epoch)
 
         # evaluate on validation set
-        val_loss, val_err1, val_err5 = validate(
-            val_loader, model, criterion, epoch)
+        val_loss, val_err1, val_err5 = trainer.test(val_loader, epoch)
+
         if args.tensorboard:
             log_value('val_loss', val_loss, epoch)
             log_value('val_err1', val_err1, epoch)
@@ -326,97 +322,6 @@ def main():
         if not is_best and epoch - best_epoch >= args.patience > 0:
             break
     print('Best val_err1: {:.4f} at epoch {}'.format(best_err1, best_epoch))
-
-
-def train(train_loader, model, criterion, optimizer, epoch):
-    batch_time = AverageMeter()
-    data_time = AverageMeter()
-    losses = AverageMeter()
-    top1 = AverageMeter()
-    top5 = AverageMeter()
-
-    # switch to train mode
-    model.train()
-
-    end = time.time()
-    for i, (input, target) in enumerate(train_loader):
-        # measure data loading time
-        data_time.update(time.time() - end)
-
-        target = target.cuda(async=True)
-        input_var = torch.autograd.Variable(input)
-        target_var = torch.autograd.Variable(target)
-
-        # compute output
-        output = model(input_var)
-        loss = criterion(output, target_var)
-
-        # measure error and record loss
-        err1, err5 = error(output.data, target, topk=(1, 5))
-        losses.update(loss.data[0], input.size(0))
-        top1.update(err1[0], input.size(0))
-        top5.update(err5[0], input.size(0))
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        # measure elapsed time
-        batch_time.update(time.time() - end)
-        end = time.time()
-
-        if args.print_freq > 0 and (i + 1) % args.print_freq == 0:
-            print('Epoch: [{0}][{1}/{2}]\t'
-                  'Time {batch_time.avg:.3f}\t'
-                  'Data {data_time.avg:.3f}\t'
-                  'Loss {loss.val:.4f}\t'
-                  'Err@1 {top1.val:.4f}\t'
-                  'Err@5 {top5.val:.4f}'.format(
-                      epoch, i + 1, len(train_loader), batch_time=batch_time,
-                      data_time=data_time, loss=losses, top1=top1, top5=top5))
-
-            print('Epoch: {:3d} Train loss {loss.avg:.4f} Err@1 {top1.avg:.4f}'
-                  ' Err@5 {top5.avg:.4f}'
-                  .format(epoch, loss=losses, top1=top1, top5=top5))
-    return losses.avg, top1.avg, top5.avg
-
-
-def validate(val_loader, model, criterion, epoch, silence=False):
-    batch_time = AverageMeter()
-    losses = AverageMeter()
-    top1 = AverageMeter()
-    top5 = AverageMeter()
-
-    # switch to evaluate mode
-    model.eval()
-
-    end = time.time()
-    for i, (input, target) in enumerate(val_loader):
-        target = target.cuda(async=True)
-        input_var = torch.autograd.Variable(input, volatile=True)
-        target_var = torch.autograd.Variable(target, volatile=True)
-
-        # compute output
-        output = model(input_var)
-        loss = criterion(output, target_var)
-
-        # measure error and record loss
-        err1, err5 = error(output.data, target, topk=(1, 5))
-        losses.update(loss.data[0], input.size(0))
-        top1.update(err1[0], input.size(0))
-        top5.update(err5[0], input.size(0))
-
-        # measure elapsed time
-        batch_time.update(time.time() - end)
-        end = time.time()
-
-    if not silence:
-        print('Epoch: {:3d} val   loss {loss.avg:.4f} Err@1 {top1.avg:.4f}'
-              ' Err@5 {top5.avg:.4f}'.format(epoch, loss=losses,
-                                             top1=top1, top5=top5))
-
-    return losses.avg, top1.avg, top5.avg
 
 
 if __name__ == '__main__':
