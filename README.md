@@ -1,26 +1,27 @@
 # Image Classification Project Killer in PyTorch
-This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours.
+This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours. :new_moon_with_face:
 Inspired by [fb.torch.resnet](https://github.com/facebook/fb.resnet.torch),
 it provides fast experiment setup and attempts to maximize the number of projects killed within the given time.
-Please feel free to summit issues or pull requests if you want to contribute.
+Please feel free to submit issues or pull requests if you want to contribute.
 
 ## Usage
-Use `python3 main.py -h` to show all arguments.
+Both Python 2.7 and 3.5 are supported; however, it was mainly tested on Python 3.
+Use `python main.py -h` to show all arguments.
 
 ### Training
 Train a ResNet-56 on CIFAR-10 with data augmentation using GPU0:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python3 main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
+CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
 ```
 Train a ResNet-110 on CIFAR-100 without data augmentation using GPU0 and GPU2:
 ```sh
-CUDA_VISIBLE_DEVICES=0,2 python3 main.py --data cifar100 --arch resnet --depth 110 --save save/cifar100-resnet-110 --epochs 164
+CUDA_VISIBLE_DEVICES=0,2 python main.py --data cifar100 --arch resnet --depth 110 --save save/cifar100-resnet-110 --epochs 164
 ```
 
 See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ### Evaluation
 ```sh
-python3 main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
+python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
 ```
 ### Show Training & Validation Results
 #### Python script
@@ -37,7 +38,7 @@ tensorboard --logdir save --port PORT
 ## Features
 
 ### Experiment Setup & Logging
-- Preventing overwriting previous experiments
+- Ask before overwriting existing experiments, and move the old one to /tmp instead of overwriting
 - Saving training/validation loss, errors, and learning rate of each epoch to a TSV file
 - Automatically copying all source code to saving directory to prevent accidental deleteion of codes. This is inspired by [SGAN code](https://github.com/xunhuang1995/SGAN/tree/master/mnist).
 - [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) support using [tensorboard\_logger](https://github.com/TeamHG-Memex/tensorboard_logger)
@@ -46,7 +47,8 @@ tensorboard --logdir save --port PORT
 - Holding out testing set and using validation set for hyperparameter tuning experiments
 - GPU support
 - Adding *save* & *data* folders to .gitignore to prevent commiting the datasets and trained models
-- result table
+- Result table
+- Python 2.7 & 3.5 support
 
 
 ### Models (See *models* folder for details)
@@ -74,8 +76,6 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - CIFAR-100+ (Horizontal flip and random cropping with padding 4)
 
 ### Todo List
-- [ ] copy the old results to */tmp* before overwriting them
-- [ ] Python 2.7 support
 - [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
 - [ ] CPU support
 - [ ] SVHN-small (without extra training data)
@@ -91,22 +91,22 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 - [ ] Adding an example project killing scenario
 - [ ] Adding license
 - [ ] Pretrained models
-- [ ] Pep8 check
 - [ ] Iteration mode (Counting iterations instead of epochs)
+- [ ] Pep8 check
 
 ## Results
-### Top1 Validation Error Rate (in percentage)
+### Test Error Rate (in percentage) **with** validation set
 The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (like default in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
 
-| Model                    | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ | SVHN-small | SVHN |
-|--------------------------| -----------|----------|-----------|-----------|------------|------------|------|
-| ResNet-56                | 0.86M      | 11.92    | 6.42      | 42.88     | 29.66      |            |      |
-| ResNet-110               | 1.73M      | 14.26    | 6.16      | 47.04     | 28.54      |            |      |
-| DenseNet (k=12, d=40)    |            |          |           |           |            |            |      |
-| DenseNet-BC (k=12,d=100) |            |          |           |           |            |            |      |
-| Your model               |            |          |           |           |            |            |      |
+| Model                                   | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ |
+|-----------------------------------------| -----------|----------|-----------|-----------|------------|
+| ResNet-56                               | 0.86M      |          | 6.82      |           |            |
+| ResNet-110                              | 1.73M      |          |           |           |            |
+| ResNet-110 with Stochastic Depth        | 1.73M      |          | 5.25      |           | 24.2       |
+| DenseNet-BC-100 (k=12)                  |            |          |           |           |            |
+| Your model                              |            |          |           |           |            |
 
 ### Top1 Testing Error Rate (in percentage)
 Coming soon...
