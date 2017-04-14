@@ -34,11 +34,11 @@ class BasicBlockWithDeathRate(nn.Module):
             residual = self.relu1(residual)
             residual = self.conv2(residual)
             residual = self.bn2(residual)
-            if not self.training:
-                residual *= 1. - self.death_rate
-
+            if self.training:
+                residual /= (1. - self.death_rate)
             x = x + residual
             x = self.relu2(x)
+
         return x
 
 
