@@ -60,7 +60,7 @@ tensorboard --logdir save --port PORT
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Pre-ResNet with Stochastic Depth
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
-- [x] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
+- [ ] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet)) (Our implementation is buggy now, we encourage you to put [Andreas Veit's implementation](https://github.com/andreasveit/densenet-pytorch/blob/master/densenet.py) or [Brandon Amos's implementation](https://github.com/bamos/densenet.pytorch/blob/master/densenet.py) into *models* folder and add a `createModel` function to it)
 - [ ] PyramidalNet ([paper](https://arxiv.org/abs/1610.02915))([code](https://github.com/jhkim89/PyramidNet))
 - [ ] PyramidalNet with Separated Stochastic Depth ([paper](https://arxiv.org/abs/1612.01230))([code](https://github.com/AkTgWrNsKnKPP/PyramidNet_with_Stochastic_Depth))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
@@ -113,6 +113,7 @@ Coming soon...
 
 ## File Descriptions
 - *main.py*: main script to train or evaluate models
+- *train.py*: training and evaluation part of the code
 - *config*: storing configuration of datasets (and maybe other things in the future)
 - *utils.pypy*: useful functions
 - *getbest.py*: display the best validation error of each saving folder
