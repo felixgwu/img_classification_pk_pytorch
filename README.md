@@ -23,6 +23,10 @@ See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ```sh
 python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
 ```
+
+### Adding your custom model
+You can write your own model in a *.py* file and put it into *models* folder. All you need it to provide a `createModel(arg1, arg2, **kwarg)` function that returns the model which is an instance of *nn.Module*. Then you'll be able to use your model by setting `--arch your_model_name` (assuming that your model is in a the file *models/your_model_name*).
+
 ### Show Training & Validation Results
 #### Python script
 ```sh
