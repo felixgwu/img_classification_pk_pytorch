@@ -1,3 +1,5 @@
+<p align="center"><img width="40%" src="http://i.imgur.com/EMM7Qn2.pngg" /></p>
+
 # Image Classification Project Killer in PyTorch
 This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours. :new_moon_with_face:
 Inspired by [fb.torch.resnet](https://github.com/facebook/fb.resnet.torch),
