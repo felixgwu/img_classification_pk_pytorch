@@ -1,10 +1,13 @@
+import sys
+import time
 import os
 import shutil
 import torch
 
+from colorama import Fore
+
 
 def adjust_learning_rate(optimizer, lr_init, decay_rate, epoch, num_epochs):
-    # """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
     """Decay Learning rate at 1/2 and 3/4 of the num_epochs"""
     lr = lr_init
     if epoch >= num_epochs * 0.75:
@@ -14,6 +17,34 @@ def adjust_learning_rate(optimizer, lr_init, decay_rate, epoch, num_epochs):
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
     return lr
+
+
+def create_save_folder(save_path, force=False, ignore_patterns=[]):
+    if os.path.exists(save_path):
+        print(Fore.RED + save_path + Fore.RESET
+              + ' already exists!', file=sys.stderr)
+        if not force:
+            ans = input('Do you want to overwrite it? [y/N]:')
+            if ans not in ('y', 'Y', 'yes', 'Yes'):
+                os.exit(1)
+        tmp_path = '/tmp/{}_{}'.format(os.path.basename(save_path),
+                                       time.time())
+        print('move existing {} to {}'.format(save_path, Fore.RED
+                                              + tmp_path + Fore.RESET))
+        shutil.copytree(save_path, tmp_path)
+        shutil.rmtree(save_path)
+    os.makedirs(save_path)
+    print('create folder: ' + Fore.GREEN + save_path + Fore.RESET)
+
+    # copy code to save folder
+    if save_path.find('debug') < 0:
+        shutil.copytree('.', os.path.join(save_path, 'src'), symlinks=True,
+                        ignore=shutil.ignore_patterns('*.pyc', '__pycache__',
+                                                      '*.path.tar', '*.pth',
+                                                      '*.ipynb', '.*', 'data',
+                                                      'save', 'save_backup',
+                                                      save_path,
+                                                      *ignore_patterns))
 
 
 def save_checkpoint(state, is_best, save_dir, filename='checkpoint.pth.tar'):

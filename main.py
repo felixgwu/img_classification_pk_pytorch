@@ -5,8 +5,6 @@ from __future__ import division
 from __future__ import absolute_import
 
 import os
-import shutil
-import time
 import sys
 
 import torch
@@ -19,7 +17,7 @@ from importlib import import_module
 
 import config
 from dataloader import getDataloaders
-from utils import (save_checkpoint, get_optimizer)
+from utils import save_checkpoint, get_optimizer, create_save_folder
 from args import arg_parser, arch_resume_names
 
 try:
@@ -119,40 +117,7 @@ def main():
             splits=('train', 'val'), **vars(args))
 
     # check if the folder exists
-    if os.path.exists(args.save):
-        print(Fore.RED + args.save + Fore.RESET
-              + ' already exists!', file=sys.stderr)
-        if not args.force:
-            ans = input('Do you want to overwrite it? [y/N]:')
-            if ans not in ('y', 'Y', 'yes', 'Yes'):
-                os.exit(1)
-        tmp_path = '/tmp/{}_{}'.format(os.path.basename(args.save),
-                                       time.time())
-        print('move existing {} to {}'.format(args.save, Fore.RED
-                                              + tmp_path + Fore.RESET))
-        shutil.copytree(args.save, tmp_path)
-        shutil.rmtree(args.save)
-    os.makedirs(args.save)
-    print('create folder: ' + Fore.GREEN + args.save + Fore.RESET)
-
-    # copy code to save folder
-    if args.save.find('debug') < 0:
-        shutil.copytree(
-            '.',
-            os.path.join(
-                args.save,
-                'src'),
-            symlinks=True,
-            ignore=shutil.ignore_patterns(
-                '*.pyc',
-                '__pycache__',
-                '*.path.tar',
-                '*.pth',
-                '*.ipynb',
-                '.*',
-                'data',
-                'save',
-                'save_backup'))
+    create_save_folder(args.save, args.force)
 
     # set up logging
     global log_print, f_log
