@@ -1,3 +1,5 @@
+<p align="center"><img width="40%" src="http://i.imgur.com/EMM7Qn2.pngg" /></p>
+
 # Image Classification Project Killer in PyTorch
 This repo is designed for those who want to start their experiments two days before the deadline and kill the project in the last 6 hours. :new_moon_with_face:
 Inspired by [fb.torch.resnet](https://github.com/facebook/fb.resnet.torch),
@@ -23,6 +25,10 @@ See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ```sh
 python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
 ```
+
+### Adding your custom model
+You can write your own model in a *.py* file and put it into *models* folder. All you need it to provide a `createModel(arg1, arg2, **kwarg)` function that returns the model which is an instance of *nn.Module*. Then you'll be able to use your model by setting `--arch your_model_name` (assuming that your model is in a the file *models/your_model_name*).
+
 ### Show Training & Validation Results
 #### Python script
 ```sh
@@ -60,7 +66,7 @@ tensorboard --logdir save --port PORT
 - [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
 - [ ] Pre-ResNet with Stochastic Depth
 - [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
-- [x] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet))
+- [ ] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet)) (Our implementation is buggy now, we encourage you to put [Andreas Veit's implementation](https://github.com/andreasveit/densenet-pytorch/blob/master/densenet.py) or [Brandon Amos's implementation](https://github.com/bamos/densenet.pytorch/blob/master/densenet.py) into *models* folder and add a `createModel` function to it)
 - [ ] PyramidalNet ([paper](https://arxiv.org/abs/1610.02915))([code](https://github.com/jhkim89/PyramidNet))
 - [ ] PyramidalNet with Separated Stochastic Depth ([paper](https://arxiv.org/abs/1612.01230))([code](https://github.com/AkTgWrNsKnKPP/PyramidNet_with_Stochastic_Depth))
 - [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
@@ -113,6 +119,7 @@ Coming soon...
 
 ## File Descriptions
 - *main.py*: main script to train or evaluate models
+- *train.py*: training and evaluation part of the code
 - *config*: storing configuration of datasets (and maybe other things in the future)
 - *utils.pypy*: useful functions
 - *getbest.py*: display the best validation error of each saving folder
