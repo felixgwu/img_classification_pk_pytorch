@@ -103,7 +103,7 @@ Last 5000 samples in the original training set is used for validation. Each pixe
 ## Results
 ### Test Error Rate (in percentage) **with** validation set
 The number of parameters are calculated based on CIFAR-10 model.
-ResNets were training with 164 epochs (like default in fb.resnet.torch) and DenseNets were trained 300 epochs.
+ResNets were training with 164 epochs (the same as the default setting in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
 
 | Model                                   | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ |
@@ -111,7 +111,8 @@ Both are using batch\_size=64.
 | ResNet-56                               | 0.86M      |          | 6.82      |           |            |
 | ResNet-110                              | 1.73M      |          |           |           |            |
 | ResNet-110 with Stochastic Depth        | 1.73M      |          | 5.25      |           | 24.2       |
-| DenseNet-BC-100 (k=12)                  |            |          |           |           |            |
+| DenseNet-BC-100 (k=12)                  | 0.8M       |          | 5.34      |           |            |
+| DenseNet-BC-190 (k=40)                  | 25.6M      |          |           |           |            |
 | Your model                              |            |          |           |           |            |
 
 ### Top1 Testing Error Rate (in percentage)

@@ -37,6 +37,8 @@ data_group.add_argument('--data', metavar='D', default='cifar10',
                         help='datasets: ' +
                         ' | '.join(config.datasets.keys()) +
                         ' (default: cifar10)')
+data_group.add_argument('--no_valid', action='store_false', dest='use_validset',
+                        help='not hold out 10 percent of training data as validation')
 data_group.add_argument('--data_root', metavar='DIR', default='data',
                         help='path to dataset (default: data)')
 data_group.add_argument('-j', '--workers', dest='num_workers', default=4,
