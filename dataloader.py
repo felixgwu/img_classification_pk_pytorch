@@ -13,12 +13,12 @@ def getDataloaders(data, config_of_data, splits=['train', 'val', 'test'],
         print(config_of_data)
         if data.find('cifar100') >= 0:
             d_func = dset.CIFAR100
-            normalize = transforms.Normalize(mean=[0.4914, 0.4824, 0.4467],
-                                             std=[0.2471, 0.2435, 0.2616])
-        else:
-            d_func = dset.CIFAR10
             normalize = transforms.Normalize(mean=[0.5071, 0.4867, 0.4408],
                                              std=[0.2675, 0.2565, 0.2761])
+        else:
+            d_func = dset.CIFAR10
+            normalize = transforms.Normalize(mean=[0.4914, 0.4824, 0.4467],
+                                             std=[0.2471, 0.2435, 0.2616])
         if config_of_data['augmentation']:
             print('with data augmentation')
             aug_trans = [
