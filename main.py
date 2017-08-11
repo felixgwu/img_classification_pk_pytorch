@@ -93,6 +93,9 @@ def main():
     # define optimizer
     optimizer = get_optimizer(model, args)
 
+    # set random seed
+    torch.manual_seed(args.seed)
+
     Trainer = import_module(args.trainer).Trainer
     trainer = Trainer(model, criterion, optimizer, args)
 

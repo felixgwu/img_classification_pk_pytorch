@@ -29,6 +29,8 @@ exp_group.add_argument('--print-freq', '-p', default=100, type=int,
 exp_group.add_argument('--no_tensorboard', dest='tensorboard',
                        action='store_false',
                        help='do not use tensorboard_logger for logging')
+exp_group.add_argument('--seed', default=0, type=int,
+                       help='random seed')
 
 # dataset related
 data_group = arg_parser.add_argument_group('data', 'dataset setting')
