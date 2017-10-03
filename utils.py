@@ -59,7 +59,7 @@ def save_checkpoint(state, is_best, save_dir, filename='checkpoint.pth.tar'):
 def get_optimizer(model, args):
     if args.optimizer == 'sgd':
         return torch.optim.SGD(model.parameters(), args.lr,
-                               momentum=args.momentum,
+                               momentum=args.momentum, nesterov=args.nesterov,
                                weight_decay=args.weight_decay)
     elif args.optimizer == 'rmsprop':
         return torch.optim.RMSprop(model.parameters(), args.lr,
