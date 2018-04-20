@@ -63,12 +63,12 @@ arch_group.add_argument('--drop-rate', default=0.0, type=float,
                         metavar='DROPRATE', help='dropout rate (default: 0.2)')
 arch_group.add_argument('--death-mode', default='none',
                         choices=['none', 'linear', 'uniform'],
-                        help='death mode (default: none)')
+                        help='death mode for stochastic depth (default: none)')
 arch_group.add_argument('--death-rate', default=0.5, type=float,
                         help='death rate rate (default: 0.5)')
 arch_group.add_argument('--growth-rate', default=12, type=int,
                         metavar='GR', help='Growth rate of DenseNet'
-                        ' (1 means dot\'t use compression) (default: 0.5)')
+                        '(default: 12)')
 arch_group.add_argument('--bn-size', default=4, type=int,
                         metavar='B', help='bottle neck ratio of DenseNet'
                         ' (0 means dot\'t use bottle necks) (default: 4)')

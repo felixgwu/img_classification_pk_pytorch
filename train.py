@@ -69,10 +69,10 @@ class Trainer(object):
                           batch_time=batch_time, data_time=data_time,
                           loss=losses, top1=top1, top5=top5))
 
-                print('Epoch: {:3d} Train loss {loss.avg:.4f} '
-                      'Err@1 {top1.avg:.4f}'
-                      ' Err@5 {top5.avg:.4f}'
-                      .format(epoch, loss=losses, top1=top1, top5=top5))
+        print('Epoch: {:3d} Train loss {loss.avg:.4f} '
+              'Err@1 {top1.avg:.4f}'
+              ' Err@5 {top5.avg:.4f}'
+              .format(epoch, loss=losses, top1=top1, top5=top5))
         return losses.avg, top1.avg, top5.avg, lr
 
     def test(self, val_loader, epoch, silence=False):

@@ -138,7 +138,7 @@ def main():
     f_log.flush()
     torch.save(args, os.path.join(args.save, 'args.pth'))
     scores = ['epoch\tlr\ttrain_loss\tval_loss\ttrain_err1'
-              '\tval_err1\ttrain_err5\tval_err']
+              '\tval_err1\ttrain_err5\tval_err5']
     if args.tensorboard:
         configure(args.save, flush_secs=5)
 
