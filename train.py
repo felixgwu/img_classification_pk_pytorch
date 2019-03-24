@@ -30,23 +30,22 @@ class Trainer(object):
         print('Epoch {:3d} lr = {:.6e}'.format(epoch, lr))
 
         end = time.time()
-        for i, (input, target) in enumerate(train_loader):
+        for i, (inputs, targets) in enumerate(train_loader):
             # measure data loading time
             data_time.update(time.time() - end)
 
-            target = target.cuda(async=True)
-            input_var = torch.autograd.Variable(input)
-            target_var = torch.autograd.Variable(target)
+            inputs = inputs.cuda()
+            targets = targets.cuda()
 
-            # compute output
-            output = self.model(input_var)
-            loss = self.criterion(output, target_var)
+            # compute outputs
+            outputs = self.model(inputs)
+            loss = self.criterion(outputs, targets)
 
             # measure error and record loss
-            err1, err5 = error(output.data, target, topk=(1, 5))
-            losses.update(loss.data[0], input.size(0))
-            top1.update(err1[0], input.size(0))
-            top5.update(err5[0], input.size(0))
+            err1, err5 = error(outputs, targets, topk=(1, 5))
+            losses.update(loss.item(), inputs.size(0))
+            top1.update(err1.item(), inputs.size(0))
+            top5.update(err5.item(), inputs.size(0))
 
             # compute gradient and do SGD step
             self.optimizer.zero_grad()
@@ -85,24 +84,24 @@ class Trainer(object):
         self.model.eval()
 
         end = time.time()
-        for i, (input, target) in enumerate(val_loader):
-            target = target.cuda(async=True)
-            input_var = torch.autograd.Variable(input, volatile=True)
-            target_var = torch.autograd.Variable(target, volatile=True)
+        with torch.no_grad():
+            for i, (inputs, targets) in enumerate(val_loader):
+                inputs = inputs.cuda()
+                targets = targets.cuda()
 
-            # compute output
-            output = self.model(input_var)
-            loss = self.criterion(output, target_var)
+                # compute outputs
+                outputs = self.model(inputs)
+                loss = self.criterion(outputs, targets)
 
-            # measure error and record loss
-            err1, err5 = error(output.data, target, topk=(1, 5))
-            losses.update(loss.data[0], input.size(0))
-            top1.update(err1[0], input.size(0))
-            top5.update(err5[0], input.size(0))
+                # measure error and record loss
+                err1, err5 = error(outputs.data, targets, topk=(1, 5))
+                losses.update(loss.item(), inputs.size(0))
+                top1.update(err1.item(), inputs.size(0))
+                top5.update(err5.item(), inputs.size(0))
 
-            # measure elapsed time
-            batch_time.update(time.time() - end)
-            end = time.time()
+                # measure elapsed time
+                batch_time.update(time.time() - end)
+                end = time.time()
 
         if not silence:
             print('Epoch: {:3d} val   loss {loss.avg:.4f} Err@1 {top1.avg:.4f}'

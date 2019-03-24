@@ -48,6 +48,14 @@ data_group.add_argument('-j', '--workers', dest='num_workers', default=4,
                         help='number of data loading workers (default: 4)')
 data_group.add_argument('--normalized', action='store_true',
                         help='normalize the data into zero mean and unit std')
+data_group.add_argument('--cutout', action='store_true',
+                        help='use cutout')
+data_group.add_argument('--n_holes', type=int, default=1,
+                        help='number of holes to cut out from image')
+data_group.add_argument('--length', type=int, default=16,
+                        help='length of the holes')
+data_group.add_argument('--data_aug', action='store_true',
+                        help='data augmentation')
 
 # model arch related
 arch_group = arg_parser.add_argument_group('arch',

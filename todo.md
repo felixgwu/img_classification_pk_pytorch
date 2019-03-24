@@ -1,0 +1,32 @@
+### Todo List
+- [ ] More learning rate decay strategies (currently only dropping at 1/2 and 3/4 of the epochs)
+- [ ] CPU support
+- [ ] SVHN-small (without extra training data)
+- [ ] SVHN
+- [ ] MNIST
+- [ ] ImageNet
+- [ ] Comparing tensorboard\_logger v.s. pycrayon
+- [ ] Adding acknowledgement
+- [ ] Custom models & criterions tutorial
+- [ ] Custom train & test functions tutorial
+- [ ] Custom datasets tutorial
+- [ ] Custom initialization
+- [ ] Adding an example project killing scenario
+- [ ] Adding license
+- [ ] Pretrained models
+- [ ] Iteration mode (Counting iterations instead of epochs)
+- [ ] Pep8 check
+
+### Models
+- [ ] AlexNet ([paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks))
+- [ ] VGGNet ([paper](https://arxiv.org/abs/1409.1556))
+- [ ] SqueezeNet ([paper](https://arxiv.org/abs/1602.07360)) ([code](https://github.com/DeepScale/SqueezeNet))
+- [ ] Pre-ResNet ([paper](https://arxiv.org/abs/1603.05027)) ([code](https://github.com/facebook/fb.resnet.torch))
+- [ ] Pre-ResNet with Stochastic Depth
+- [ ] Wide ResNet ([paper](https://arxiv.org/abs/1605.07146)) ([code](https://github.com/szagoruyko/wide-residual-networks))
+- [ ] DenseNet ([paper](https://arxiv.org/abs/1608.06993)) ([code](https://github.com/liuzhuang13/DenseNet)) (Our implementation is buggy now, we encourage you to put [Andreas Veit's implementation](https://github.com/andreasveit/densenet-pytorch/blob/master/densenet.py) or [Brandon Amos's implementation](https://github.com/bamos/densenet.pytorch/blob/master/densenet.py) into *models* folder and add a `createModel` function to it)
+- [ ] PyramidalNet ([paper](https://arxiv.org/abs/1610.02915))([code](https://github.com/jhkim89/PyramidNet))
+- [ ] PyramidalNet with Separated Stochastic Depth ([paper](https://arxiv.org/abs/1612.01230))([code](https://github.com/AkTgWrNsKnKPP/PyramidNet_with_Stochastic_Depth))
+- [ ] ResNeXt ([paper](https://arxiv.org/abs/1611.05431)) ([code](https://github.com/facebookresearch/ResNeXt))
+- [ ] MSDNet ([paper](https://arxiv.org/abs/1703.09844)) ([code](https://github.com/gaohuang/MSDNet))
+- [ ] Steerable CNN ([paper](https://arxiv.org/abs/1612.08498))

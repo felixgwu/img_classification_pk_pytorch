@@ -4,6 +4,7 @@ import os
 import shutil
 import torch
 
+import numpy as np
 from colorama import Fore
 
 
@@ -94,15 +95,61 @@ class AverageMeter(object):
 
 def error(output, target, topk=(1,)):
     """Computes the error@k for the specified values of k"""
-    maxk = max(topk)
-    batch_size = target.size(0)
+    with torch.no_grad():
+        maxk = max(topk)
+        batch_size = target.size(0)
 
-    _, pred = output.topk(maxk, 1, True, True)
-    pred = pred.t()
-    correct = pred.eq(target.view(1, -1).expand_as(pred))
+        _, pred = output.topk(maxk, 1, True, True)
+        pred = pred.t()
+        correct = pred.eq(target.view(1, -1).expand_as(pred))
 
-    res = []
-    for k in topk:
-        correct_k = correct[:k].view(-1).float().sum(0)
-        res.append(100.0 - correct_k.mul_(100.0 / batch_size))
+        res = []
+        for k in topk:
+            correct_k = correct[:k].view(-1).float().sum(0)
+            res.append(100.0 - correct_k.mul_(100.0 / batch_size))
     return res
+
+
+###############################################################
+# Copied from  https://github.com/uoguelph-mlrg/Cutout
+# ECL v2.0 license https://github.com/uoguelph-mlrg/Cutout/blob/master/LICENSE.md
+
+class Cutout(object):
+    """Randomly mask out one or more patches from an image.
+    Args:
+        n_holes (int): Number of patches to cut out of each image.
+        length (int): The length (in pixels) of each square patch.
+    """
+    def __init__(self, n_holes, length):
+        self.n_holes = n_holes
+        self.length = length
+
+    def __call__(self, img):
+        """
+        Args:
+            img (Tensor): Tensor image of size (C, H, W).
+        Returns:
+            Tensor: Image with n_holes of dimension length x length cut out of it.
+        """
+        h = img.size(1)
+        w = img.size(2)
+
+        mask = np.ones((h, w), np.float32)
+
+        for n in range(self.n_holes):
+            y = np.random.randint(h)
+            x = np.random.randint(w)
+
+            y1 = np.clip(y - self.length // 2, 0, h)
+            y2 = np.clip(y + self.length // 2, 0, h)
+            x1 = np.clip(x - self.length // 2, 0, w)
+            x2 = np.clip(x + self.length // 2, 0, w)
+
+            mask[y1: y2, x1: x2] = 0.
+
+        mask = torch.from_numpy(mask)
+        mask = mask.expand_as(img)
+        img = img * mask
+
+        return img
+###############################################################

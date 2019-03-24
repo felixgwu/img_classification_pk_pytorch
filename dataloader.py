@@ -2,9 +2,12 @@ import torch
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
 
+from utils import Cutout
+
 
 def getDataloaders(data, config_of_data, splits=['train', 'val', 'test'],
                    aug=True, use_validset=True, data_root='data', batch_size=64, normalized=True,
+                   data_aug=False, cutout=False, n_holes=1, length=16,
                    num_workers=3, **kwargs):
     train_loader, val_loader, test_loader = None, None, None
 
@@ -19,7 +22,7 @@ def getDataloaders(data, config_of_data, splits=['train', 'val', 'test'],
             d_func = dset.CIFAR10
             normalize = transforms.Normalize(mean=[0.4914, 0.4824, 0.4467],
                                              std=[0.2471, 0.2435, 0.2616])
-        if config_of_data['augmentation']:
+        if data_aug:
             print('with data augmentation')
             aug_trans = [
                 transforms.RandomCrop(32, padding=4),
@@ -31,7 +34,10 @@ def getDataloaders(data, config_of_data, splits=['train', 'val', 'test'],
         if normalized:
             print('dataset is normalized')
             common_trans.append(normalize)
-        train_compose = transforms.Compose(aug_trans + common_trans)
+        train_compose = aug_trans + common_trans
+        if cutout:
+            train_compose.append(Cutout(n_holes=n_holes, length=length))
+        train_compose = transforms.Compose(train_compose)
         test_compose = transforms.Compose(common_trans)
 
         if use_validset:

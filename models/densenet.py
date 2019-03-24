@@ -90,6 +90,10 @@ class DenseNet(nn.Module):
         # Linear layer
         self.classifier = nn.Linear(num_features, num_classes)
 
+        # for m in self.modules():
+        #     if isinstance(m, nn.BatchNorm2d):
+        #         m.weight.fill_(1.)
+
     def forward(self, x):
         features = self.features(x)
         out = F.relu(features, inplace=True)
