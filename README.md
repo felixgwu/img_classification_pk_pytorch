@@ -17,7 +17,7 @@ Use `python main.py -h` to show all arguments.
 ### Training
 Train a ResNet-56 on CIFAR-10 with data augmentation using GPU0:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10+ --arch resnet --depth 56 --save save/cifar10+-resnet-56 --epochs 164
+CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10 --data_aug --arch resnet --depth 56 --save save/cifar10 --data_aug-resnet-56 --epochs 164
 ```
 Train a ResNet-110 on CIFAR-100 without data augmentation using GPU0 and GPU2:
 ```sh
@@ -27,7 +27,7 @@ CUDA_VISIBLE_DEVICES=0,2 python main.py --data cifar100 --arch resnet --depth 11
 See *scripts/cifar10.sh* and *scripts/cifar100.sh* for more training examples.
 ### Evaluation
 ```sh
-python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10+
+python main.py --resume save/resnet-56/model_best.pth.tar --evaluate test --data cifar10
 ```
 
 ### Adding your custom model
@@ -77,7 +77,7 @@ The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (the same as the default setting in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
 
-| Model                                   | Parameters | CIFAR-10 | CIFAR-10+ | CIFAR-100 | CIFAR-100+ |
+| Model                                   | Parameters | CIFAR-10 | CIFAR-10 --data_aug | CIFAR-100 | CIFAR-100 --data_aug |
 |-----------------------------------------| -----------|----------|-----------|-----------|------------|
 | ResNet-56                               | 0.86M      |          | 6.82      |           |            |
 | ResNet-110                              | 1.73M      |          |           |           |            |
