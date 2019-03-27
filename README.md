@@ -9,7 +9,6 @@ Please feel free to submit issues or pull requests if you want to contribute.
 ## News
 - Updated to PyTorch version >= 0.4
 - Supporting [Cutout regularization](https://arxiv.org/abs/1708.04552) Please these [options](https://github.com/felixgwu/img_classification_pk_pytorch/blob/master/args.py#L51-L56).
-- 
 
 ## Usage
 Both Python 2.7 and 3 are supported; however, it was mainly tested on Python 3.
