@@ -7,7 +7,8 @@ it provides fast experiment setup and attempts to maximize the number of project
 Please feel free to submit issues or pull requests if you want to contribute.
 
 ## News
-Update to PyTorch version >= 0.4
+- Updated to PyTorch version >= 0.4
+- Supporting [Cutout regularization](https://arxiv.org/abs/1708.04552) Please these [options](https://github.com/felixgwu/img_classification_pk_pytorch/blob/master/args.py#L51-L56).
 
 ## Usage
 Both Python 2.7 and 3 are supported; however, it was mainly tested on Python 3.
@@ -17,7 +18,7 @@ Use `python main.py -h` to show all arguments.
 ### Training
 Train a ResNet-56 on CIFAR-10 with data augmentation using GPU0:
 ```sh
-CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10 --data_aug --arch resnet --depth 56 --save save/cifar10 --data_aug-resnet-56 --epochs 164
+CUDA_VISIBLE_DEVICES=0 python main.py --data cifar10 --data_aug --arch resnet --depth 56 --save save/cifar10 -resnet-56 --epochs 164
 ```
 Train a ResNet-110 on CIFAR-100 without data augmentation using GPU0 and GPU2:
 ```sh
@@ -77,7 +78,7 @@ The number of parameters are calculated based on CIFAR-10 model.
 ResNets were training with 164 epochs (the same as the default setting in fb.resnet.torch) and DenseNets were trained 300 epochs.
 Both are using batch\_size=64.
 
-| Model                                   | Parameters | CIFAR-10 | CIFAR-10 --data_aug | CIFAR-100 | CIFAR-100 --data_aug |
+| Model                                   | Parameters | CIFAR-10 | CIFAR-10 (aug) | CIFAR-100 | CIFAR-100 (aug) |
 |-----------------------------------------| -----------|----------|-----------|-----------|------------|
 | ResNet-56                               | 0.86M      |          | 6.82      |           |            |
 | ResNet-110                              | 1.73M      |          |           |           |            |
